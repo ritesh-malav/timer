@@ -1,0 +1,121 @@
+<html>
+<style type="text/css">
+body {
+    background-image: url("tv.jpg");
+    background-repeat: no-repeat;
+}
+
+p {
+	padding-top: 7.2cm;
+	padding-left: 3.6cm;
+	font-size: 190px;
+	font-family: Ubuntu, sans-serif;
+}
+
+.animate
+{
+	transition: all 0.1s;
+	-webkit-transition: all 0.1s;
+}
+
+.action-button
+{
+	position: relative;
+	padding: 6px 20px;
+  	margin: 0px 10px 10px 0px;
+  	float: left;
+	border-radius: 10px;
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+	color: #FFF;
+	text-decoration: none;	
+}
+
+.blue
+{
+	background-color: #b38c40;
+	border-bottom: 5px solid #855d14;
+	text-shadow: 0px -2px #2980B9;
+}
+
+.action-button:active
+{
+	transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+	border-bottom: 1px solid;
+}
+
+</style>
+<script>
+var timer = null;
+var flag = 0;
+function start_timer(){
+	if(timer == null){
+		timer = setInterval(function(){calling()},1000);
+	}
+}
+function stop_timer(){
+	clearInterval(timer);
+	timer = null;
+}
+function set_to_12(){
+	flag = 0;
+	clearInterval(timer);
+	timer = null;
+	document.getElementById("timer").innerHTML = (12 + ":" + "00");
+}
+function set_to_10(){
+	flag = 0;
+	clearInterval(timer);
+	timer = null;
+	document.getElementById("timer").innerHTML = (10 + ":" + "00");
+}
+function calling(){
+	var time = document.getElementById("timer").innerHTML;
+	var arr = time.split(':');
+	var minuit = parseInt(arr[0]);
+	var second = parseInt(arr[1]);
+	if(flag == 0){
+		if(second == 0 && minuit == 0){
+			flag = 1;
+			minuit = 0;
+			second = 1;
+		}
+		else if(second != 0){
+			second = second - 1;
+		}
+		else{
+			second = 59;
+			minuit = minuit - 1;
+		}
+	}
+	else{
+		if(second != 59){
+			second = second + 1;
+		}
+		else{
+			second = 0;
+			minuit = minuit + 1;
+		}
+	}
+	if(minuit < 10){
+		minuit = '0'+minuit;
+	}
+	if(second < 10){
+		second = '0'+second;
+	}
+	document.getElementById("timer").innerHTML = (minuit + ":" + second);
+}
+</script>
+<body>
+<p id = "timer">12:00</p>
+<button class="action-button shadow animate blue" onclick = "start_timer()" style = "position: absolute;left: 643px;top: 240px;">
+start</button>
+<button class="action-button shadow animate blue" onclick = "stop_timer()" style = "position: absolute;left: 643px;top: 300px;">
+stop</button>
+<button class="action-button shadow animate blue" onclick = "set_to_12()" style = "position: absolute;left: 643px;top: 360px;">
+12:00</button>
+<button class="action-button shadow animate blue" onclick = "set_to_10()" style = "position: absolute;left: 643px;top: 430px;">
+10:00</button>
+</body>
+</html>
